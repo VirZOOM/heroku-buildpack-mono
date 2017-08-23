@@ -1,7 +1,17 @@
 #!/bin/bash
 # bin/detect <build-dir>
 
-if [ -f "$( find $1 -maxdepth 1 -iname *.sln )" ]; then
+
+if [[ -f $BUILD_DIR/.mono ]]; then
+  source $BUILD_DIR/.mono
+fi
+
+if [ -z ${SLN+x} ]; then
+  # find a solution file
+  SLN=$(find . -maxdepth 1 -iname "*.sln")
+fi
+
+if [ $( echo "${SLN}" | wc -l ) -gt 1 ]; then
     echo ".NET"
     exit 0
 else
