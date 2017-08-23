@@ -11,6 +11,9 @@ if [ -z ${SLN+x} ]; then
   SLN=$(find . -maxdepth 1 -iname "*.sln")
 fi
 
+echo 'stuff'
+echo $SLN
+
 if [ $( echo "${SLN}" | wc -l ) -gt 1 ]; then
     echo ".NET"
     exit 0
