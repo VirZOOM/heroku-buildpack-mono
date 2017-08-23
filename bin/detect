@@ -5,6 +5,8 @@ set -x
 
 echo 'stuff 1'
 
+BUILD_DIR=$1
+
 if [[ -f $BUILD_DIR/.mono ]]; then
   source $BUILD_DIR/.mono
 fi
