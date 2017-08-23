@@ -123,8 +123,11 @@ set -e
 # now that mono is installed, build the app
 cd $BUILD_DIR
 
-# find a solution file
-SLN=$(find . -maxdepth 1 -iname "*.sln")
+if [ -z ${SLN+x} ]; then
+  # find a solution file
+  SLN=$(find . -maxdepth 1 -iname "*.sln")
+fi
+
 if [ $( echo "${SLN}" | wc -l ) -gt 1 ]; then
   error "Too many *.sln files"
 fi
@@ -150,9 +153,13 @@ else
   fi
 fi
 
+if [ -z ${CONFIGURATION+x} ]; then
+  CONFIGURATION='Release'
+fi
+
 topic "Compiling .NET application"
-xbuild /property:Configuration=Release /property:OutDir=$BUILD_DIR/ $SLN
+xbuild /property:Configuration=$CONFIGURATION /property:OutDir=$BUILD_DIR/ $SLN
 
 if $MONO_FALLBACK; then
-  warn "Mono $MONO_VERSION-$MONO_TYPE failed to install. Mono v4.2.1-$MONO_TYPE was installed instead." 
+  warn "Mono $MONO_VERSION-$MONO_TYPE failed to install. Mono v4.2.1-$MONO_TYPE was installed instead."
 fi
