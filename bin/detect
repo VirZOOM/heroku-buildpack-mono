@@ -9,6 +9,8 @@ if [[ -f $BUILD_DIR/.mono ]]; then
   source $BUILD_DIR/.mono
 fi
 
+echo "SLN is $SLN"
+
 if [ -z ${SLN+x} ]; then
   # find a solution file
   SLN=$(find . -maxdepth 1 -iname "*.sln")
